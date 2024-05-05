@@ -1,0 +1,10 @@
+
+.upload {  
+    width: 100%;
+    height: 60px;
+    line-eight: 60px;
+    border-width: .8px;
+    border-style: dashed;
+    border-radius: 5px;
+    text-align: center;
+}

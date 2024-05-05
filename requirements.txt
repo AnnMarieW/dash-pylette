@@ -1,0 +1,4 @@
+dash==2.17.0
+dash-mantine-components==0.14.3
+dash-iconify==0.1.2
+pylette==2.0.1
