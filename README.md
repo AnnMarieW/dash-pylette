@@ -8,9 +8,6 @@ color palettes from images. Whether you're a designer, artist, or developer, Das
 way to generate color schemes for your projects.
 
 
-### Find more information in the [Pylette GitHub](https://github.com/qTipTip/Pylette) 
-__Don't forget to give it a :star:__
-
 ### Features
 
 - **User-Friendly Interface**: Easily select an image from the dropdown menu or upload your own to generate a color palette.
@@ -19,9 +16,18 @@ __Don't forget to give it a :star:__
 - **Integration with Pylette**: Utilizes the powerful features of the Pylette library for efficient color extraction.
 - **Responsive Design**: Designed with the Dash Mantine Components Library.
 
-###  See it live at:  
+-------------------
+
+
 
 ![dash-pylette](https://github.com/AnnMarieW/dash-pylette/assets/72614349/313443f8-ae43-4371-a4d4-ba9051deb61c)
+
+
+
+--------------------
+
+
+
 
 ### Getting Started
 
