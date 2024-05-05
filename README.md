@@ -3,9 +3,13 @@
 
 ### Introduction
 
-Welcome to Dash Pylette - a  Dash app showcasing the power of the Pylette library. This app serves as a tool to extract
+Welcome to Dash Pylette - a  Dash app showcasing the power of the [Pylette](https://github.com/qTipTip/Pylette) library. This app serves as a tool to extract
 color palettes from images. Whether you're a designer, artist, or developer, Dash Pylette provides an easy
 way to generate color schemes for your projects.
+
+
+### Find more information in the [Pylette GitHub](https://github.com/qTipTip/Pylette) 
+__Don't forget to give it a :star:__
 
 ### Features
 
@@ -16,6 +20,8 @@ way to generate color schemes for your projects.
 - **Responsive Design**: Designed with the Dash Mantine Components Library.
 
 ###  See it live at:  
+
+![dash-pylette](https://github.com/AnnMarieW/dash-pylette/assets/72614349/313443f8-ae43-4371-a4d4-ba9051deb61c)
 
 ### Getting Started
 
@@ -48,9 +54,6 @@ Use the generated Color Palette
 4. **Set Frame Color**: Set the selected color as the frame color for the image to see it in action.
 5. **Experiment**: Try out different images, algorithms, and sorting methods to discover unique color combinations.
 
-
-### Find more information in the [Pylette GitHub](https://github.com/qTipTip/Pylette) 
-Don't forget to give both this library and Pylette a :star: !
 
 
 ### License
