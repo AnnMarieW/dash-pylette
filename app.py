@@ -229,7 +229,8 @@ def update_image(image_path, upload, color_count, sort_value, mode_value, resize
         code=f" color_palette = {swatches}",
         language="python",
         copyLabel="copy color palette",
-        style={"textAlign": "left"},
+        p="sm",
+        style={"textAlign": "left"}
     )
 
     return src, swatches, dominant_color, copy_swatches
@@ -255,4 +256,5 @@ def navbar_is_open(opened, navbar):
     navbar["collapsed"] = {"mobile": not opened}
     return navbar
 
-app.run_server(debug=True)
+if __name__ == "__main__":
+    app.run_server(debug=True)
