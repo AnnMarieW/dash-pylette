@@ -96,15 +96,14 @@ def create_link(icon, href, text=""):
         ],
         href=href,
         target="_blank",
-        visibleFrom="xs",
     )
 
 
 header = dmc.Group(
     [
         dmc.Burger(id="burger-button", opened=False, hiddenFrom="md"),
-        dmc.Text(["Pylette"], size="xl", fw=700),
-        dmc.Text(" Extract a color palette from an image", visibleFrom="xs", size="xl"),
+        dmc.Text(["Dash Pylette"], size="xl", fw=700),
+        dmc.Text(" Get a color palette from an image", visibleFrom="xs", size="xl"),
         create_link(icons["github"], "https://github.com/AnnMarieW/dash-pylette"),
     ],
     justify="flex-start",
@@ -177,7 +176,9 @@ page_content = dcc.Loading(
                 [
                     color_picker,
                     dmc.Text(id="selected-color", mb=24),
-                    dmc.ScrollArea(html.Div(id="copy"), w=650),
+                    dmc.ScrollArea(html.Div(id="copy"),  offsetScrollbars=True,
+    type="scroll",
+    style={"widthe": "100%"},),
                 ]
             )
         ),
