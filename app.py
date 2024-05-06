@@ -80,11 +80,11 @@ color_picker = dmc.ColorPicker(
 )
 
 
-def create_link(icon, href):
+def create_link(icon, href, text=""):
     return dmc.Anchor(
-        dmc.ActionIcon(
+        [dmc.ActionIcon(
             DashIconify(icon=icon, width=25), variant="transparent", size="lg"
-        ),
+        ) if icon else None, text],
         href=href,
         target="_blank",
         visibleFrom="xs",
@@ -112,6 +112,14 @@ def make_divider(text, icon):
         mb=10,
     )
 
+dash_pylette = html.Div([
+    dmc.Text([
+        "Make ",
+        create_link(icon=None, href="https://github.com/AnnMarieW/dash-pylette",text=" a Dash app like this"),
+        " in ~250 lines of Python code. "
+    ], ),
+
+])
 
 navbar = html.Div(
     [
@@ -124,7 +132,8 @@ navbar = html.Div(
         resize,
         dmc.Text("Palette color count", size="sm"),
         pallette_color_count,
-    ]
+        html.Div(dash_pylette, style={"marginTop": 300}),
+    ],
 )
 
 page_content = dcc.Loading(
