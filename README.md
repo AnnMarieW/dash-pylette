@@ -7,7 +7,7 @@ Welcome to Dash Pylette - a  Dash app showcasing the power of the [Pylette](http
 color palettes from images. Whether you're a designer, artist, or developer, Dash Pylette provides an easy
 way to generate color schemes for your projects.
 
-##  See it live at https://dashpylette.pythonanywhere.com/
+###  See it live at https://dashpylette.pythonanywhere.com/
 
 ------------------
 
@@ -23,16 +23,17 @@ way to generate color schemes for your projects.
 Configure Pylette
 
 2. **Sort Colors By** - will sort the color palette by the frequency or the luminance (perceived brightness).
-3. **Color Quantization Mode** - to sepecify the color quantization method - either using K-Means (default) or Median-Cut algorithms.
+3. **Color Quantization Mode** - to specify the color quantization method - either using K-Means (default) or Median-Cut algorithms.
 4. **Palette Color Count** - set the number of colors in the palette
 5. **Resize** - resize the image to a more manageable size before beginning color extraction. This significantly speeds up the extraction, but reduces the faithfulness of the color palette.
-2. **Generate Palette**: Let Pylette work its magic and extract a color palette from the selected image.
+6. **Generate Palette**: Let Pylette work its magic and extract a color palette from the selected image.
 
-Use the generated Color Palette
-5. **Explore**: Explore the extracted colors and pick your favorites using the color picker.
-4. **Set Frame Color**: Set the selected color as the frame color for the image to see it in action.
-5. **Experiment**: Try out different images, algorithms, and sorting methods to discover unique color combinations.
-6. **Copy the Color Palet**: Use the generated color palette in your onw project!
+Use the generated Color Palette  
+
+7. **Explore**: Explore the extracted colors and pick your favorites using the color picker.
+8. **Set Frame Color**: Set the selected color as the frame color for the image to see it in action.
+9. **Experiment**: Try out different images, algorithms, and sorting methods to discover unique color combinations.
+10. **Copy the Color Palette**: Use the generated color palette in your onw project!
 
 
 ### To run the app locally
