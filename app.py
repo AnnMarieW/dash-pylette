@@ -140,7 +140,7 @@ dash_pylette = html.Div(
     ]
 )
 
-navbar = html.Div(
+navbar = dmc.ScrollArea(
     [
         dmc.Text(" Extract a color palette from an image", hiddenFrom="xs", size="xl"),
         select_image,
@@ -154,6 +154,10 @@ navbar = html.Div(
         pallette_color_count,
         html.Div(dash_pylette, style={"marginTop": 300}),
     ],
+    offsetScrollbars=True,
+    type="scroll",
+    style={"height": "100%"},
+
 )
 
 page_content = dcc.Loading(
