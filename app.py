@@ -102,7 +102,7 @@ def create_link(icon, href, text=""):
 
 header = dmc.Group(
     [
-        dmc.Burger(id="burger-button", opened=False),
+        dmc.Burger(id="burger-button", opened=False, hiddenFrom="md"),
         dmc.Text(["Pylette: Extract a color palette from an image"], size="xl"),
         create_link(icons["github"], "https://github.com/AnnMarieW/dash-pylette"),
     ],
