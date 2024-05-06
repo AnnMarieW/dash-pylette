@@ -150,6 +150,7 @@ page_content = dcc.Loading(
         ),
     ],
     overlay_style={"visibility": "visible", "opacity": 0.5, "backgroundColor": "white"},
+    delay_show=500
 )
 
 
