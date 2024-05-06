@@ -1,3 +1,4 @@
+import dash
 import dash_mantine_components as dmc
 from dash_iconify import DashIconify
 from dash import Dash, _dash_renderer, html, dcc, callback, Input, Output, State, ctx
@@ -162,8 +163,9 @@ page_content = dcc.Loading(
     delay_show=500
 )
 
+# using pages just for an easy way to generate the meta-tags :-)
+app = Dash(use_pages=True, pages_folder="")
 
-app = Dash()
 
 app_shell = dmc.AppShell(
     [
@@ -181,7 +183,11 @@ app_shell = dmc.AppShell(
     id="app-shell",
 )
 
-app.layout = dmc.MantineProvider([app_shell])
+dash.register_page(
+    "Dash Pylette", layout=app_shell, path="/",
+    description="Welcome to Dash Pylette - a Dash app showcasing the power of the Pylette library. This app serves as a tool to extract color palettes from images. Whether you're a designer, artist, or developer, Dash Pylette provides an easy way to generate color schemes for your projects."
+)
+app.layout = dmc.MantineProvider([dash.page_container])
 
 
 def save_base64_image(base64_string):
