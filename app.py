@@ -76,7 +76,7 @@ set_frame_color = dmc.Checkbox(
 
 
 color_picker = dmc.ColorPicker(
-    id="color-picker", swatchesPerRow=6, withPicker=False, mb=24
+    id="color-picker", swatchesPerRow=6, withPicker=False, mb=10
 )
 
 
@@ -124,10 +124,6 @@ navbar = html.Div(
         resize,
         dmc.Text("Palette color count", size="sm"),
         pallette_color_count,
-        make_divider("Results", icons["palette"]),
-        set_frame_color,
-        color_picker,
-        dmc.ScrollArea(html.Div(id="copy"), w=350),
     ]
 )
 
@@ -143,12 +139,21 @@ page_content = dcc.Loading(
             )
         ),
         dmc.Group(id="palette", gap=0, justify="center", mt=10),
+        html.Center(
+            html.Div(
+                [
+                    color_picker,
+                    dmc.Text(id="selected-color", mb=24),
+                    dmc.ScrollArea(html.Div(id="copy"), w=650),
+                ]
+            )
+        ),
     ],
     overlay_style={"visibility": "visible", "opacity": 0.5, "backgroundColor": "white"},
 )
 
 
-app = Dash(__name__)
+app = Dash()
 
 app_shell = dmc.AppShell(
     [
@@ -184,31 +189,9 @@ def save_base64_image(base64_string):
     return temp_file.name
 
 
-def make_palette(swatches):
-    palette = []
-    for color in swatches:
-        palette.append(
-            dmc.Tooltip(
-                dmc.Text(
-                    style={
-                        "backgroundColor": color,
-                        "borderLeft": "1px rgb(50, 50, 50) solid",
-                        "height": "24px",
-                        "width": "60px",
-                    }
-                ),
-                label=color,
-                withArrow=True,
-                position="bottom",
-            )
-        )
-    return palette
-
-
 @callback(
     Output("image", "src"),
     Output("color-picker", "swatches"),
-    Output("palette", "children"),
     Output("color-picker", "value"),
     Output("copy", "children"),
     Input("select-image", "value"),
@@ -242,22 +225,25 @@ def update_image(image_path, upload, color_count, sort_value, mode_value, resize
     swatches = [f"rgb{color.rgb}" for color in palette]
     dominant_color = swatches[0]
 
-    palette_swatch = make_palette(swatches)
     copy_swatches = dmc.CodeHighlight(
-        code=str(swatches), language="python", copyLabel="copy color palette"
+        code=f" color_palette = {swatches}",
+        language="python",
+        copyLabel="copy color palette",
+        style={"textAlign": "left"},
     )
 
-    return src, swatches, palette_swatch, dominant_color, copy_swatches
+    return src, swatches, dominant_color, copy_swatches
 
 
 @callback(
     Output("image-card", "style"),
-    Input("checkbox-set-background", "checked"),
+    Output("selected-color", "children"),
     Input("color-picker", "value"),
 )
-def update_frame_color(checked, color):
+def update_frame_color(color):
     style = {"backgroundColor": color}
-    return style if checked else None
+    selected = f"Selected frame color: {color}"
+    return style, selected
 
 
 @callback(
@@ -269,6 +255,4 @@ def navbar_is_open(opened, navbar):
     navbar["collapsed"] = {"mobile": not opened}
     return navbar
 
-
-if __name__ == "__main__":
-    app.run_server(debug=True)
+app.run_server(debug=True)
