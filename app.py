@@ -30,6 +30,7 @@ select_image = dmc.Select(
     w="100%",
     mb=10,
     value="assets/flowers.jpg",
+    clearable=True,
 )
 
 upload = dcc.Upload(
@@ -83,9 +84,16 @@ color_picker = dmc.ColorPicker(
 
 def create_link(icon, href, text=""):
     return dmc.Anchor(
-        [dmc.ActionIcon(
-            DashIconify(icon=icon, width=25), variant="transparent", size="lg"
-        ) if icon else None, text],
+        [
+            (
+                dmc.ActionIcon(
+                    DashIconify(icon=icon, width=25), variant="transparent", size="lg"
+                )
+                if icon
+                else None
+            ),
+            text,
+        ],
         href=href,
         target="_blank",
         visibleFrom="xs",
@@ -96,7 +104,7 @@ header = dmc.Group(
     [
         dmc.Burger(id="burger-button", opened=False),
         dmc.Text(["Pylette: Extract a color palette from an image"], size="xl"),
-        create_link(icons["github"], "https://github.com/qTipTip/Pylette"),
+        create_link(icons["github"], "https://github.com/AnnMarieW/dash-pylette"),
     ],
     justify="flex-start",
 )
@@ -113,14 +121,23 @@ def make_divider(text, icon):
         mb=10,
     )
 
-dash_pylette = html.Div([
-    dmc.Text([
-        "Make ",
-        create_link(icon=None, href="https://github.com/AnnMarieW/dash-pylette",text=" a Dash app like this"),
-        " in ~250 lines of Python code. "
-    ], size="sm" ),
 
-])
+dash_pylette = html.Div(
+    [
+        dmc.Text(
+            [
+                "Make ",
+                create_link(
+                    icon=None,
+                    href="https://github.com/AnnMarieW/dash-pylette",
+                    text=" a Dash app like this",
+                ),
+                " in ~250 lines of Python code. ",
+            ],
+            size="sm",
+        ),
+    ]
+)
 
 navbar = html.Div(
     [
@@ -160,7 +177,7 @@ page_content = dcc.Loading(
         ),
     ],
     overlay_style={"visibility": "visible", "opacity": 0.5, "backgroundColor": "white"},
-    delay_show=500
+    delay_show=500,
 )
 
 # using pages just for an easy way to generate the meta-tags :-)
@@ -172,6 +189,7 @@ app_shell = dmc.AppShell(
         dmc.AppShellHeader(header, px=25),
         dmc.AppShellNavbar(navbar, p=24),
         dmc.AppShellMain(page_content),
+        dcc.Store(id="select-image-store", data={}),
     ],
     header={"height": 70},
     padding="xl",
@@ -184,8 +202,10 @@ app_shell = dmc.AppShell(
 )
 
 dash.register_page(
-    "Dash Pylette", layout=app_shell, path="/",
-    description="Welcome to Dash Pylette - a Dash app showcasing the power of the Pylette library. This app serves as a tool to extract color palettes from images. Whether you're a designer, artist, or developer, Dash Pylette provides an easy way to generate color schemes for your projects."
+    "Dash Pylette",
+    layout=app_shell,
+    path="/",
+    description="Welcome to Dash Pylette - a Dash app showcasing the power of the Pylette library. This app serves as a tool to extract color palettes from images. Whether you're a designer, artist, or developer, Dash Pylette provides an easy way to generate color schemes for your projects.",
 )
 app.layout = dmc.MantineProvider([dash.page_container])
 
@@ -207,28 +227,38 @@ def save_base64_image(base64_string):
 
 @callback(
     Output("image", "src"),
-    Output("color-picker", "swatches"),
-    Output("color-picker", "value"),
-    Output("copy", "children"),
+    Output("select-image-store", "data"),
+    Output("select-image", "value"),
     Input("select-image", "value"),
     Input("upload-image", "contents"),
-    Input("color-count", "value"),
-    Input("radio-group-sort-by", "value"),
-    Input("radio-group-mode", "value"),
-    Input("checkbox-resize", "checked"),
 )
-def update_image(image_path, upload, color_count, sort_value, mode_value, resize_value):
+def update_image(image_path, upload):
     """
     Notes:
         `extract_colors` accepts an image file path only.  If a file is uploaded, it's saved in a temporary file
         the html.Img `src` prop is either the uploaded base64 file, or a path to a file in the assets folder.
     """
-    src = image_path
-
     if ctx.triggered_id == "upload-image":
         temp_file_path = save_base64_image(upload)
-        image_path = temp_file_path
-        src = upload
+        return upload, temp_file_path, None
+    if image_path == None:
+        return dash.no_update, dash.no_update, dash.no_update
+    return image_path, image_path, dash.no_update
+
+
+@callback(
+    Output("color-picker", "swatches"),
+    Output("color-picker", "value"),
+    Output("copy", "children"),
+    Input("select-image-store", "data"),
+    Input("color-count", "value"),
+    Input("radio-group-sort-by", "value"),
+    Input("radio-group-mode", "value"),
+    Input("checkbox-resize", "checked"),
+)
+def process_image_and_update_layout(
+    image_path, color_count, sort_value, mode_value, resize_value
+):
 
     palette = extract_colors(
         image=image_path,
@@ -246,10 +276,10 @@ def update_image(image_path, upload, color_count, sort_value, mode_value, resize
         language="python",
         copyLabel="copy color palette",
         p="sm",
-        style={"textAlign": "left"}
+        style={"textAlign": "left"},
     )
 
-    return src, swatches, dominant_color, copy_swatches
+    return swatches, dominant_color, copy_swatches
 
 
 @callback(
@@ -271,6 +301,7 @@ def update_frame_color(color):
 def navbar_is_open(opened, navbar):
     navbar["collapsed"] = {"mobile": not opened}
     return navbar
+
 
 if __name__ == "__main__":
     app.run_server(debug=True)
