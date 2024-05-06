@@ -142,7 +142,7 @@ dash_pylette = html.Div(
 
 navbar = dmc.ScrollArea(
     [
-        dmc.Text(" Extract a color palette from an image", hiddenFrom="xs", size="xl"),
+        dmc.Text("Get a color palette from an image", hiddenFrom="xs", fw=700),
         select_image,
         dmc.Text("Or upload a file", size="sm"),
         upload,
