@@ -9,6 +9,12 @@ way to generate color schemes for your projects.
 
 ##  See it live at https://dashpylette.pythonanywhere.com/
 
+------------------
+
+![dash-pylette](https://github.com/AnnMarieW/dash-pylette/assets/72614349/1ce897c4-caa2-4b24-a0a7-d795faa516d5)
+
+
+--------------
 
 ### Getting Started
 
@@ -29,20 +35,7 @@ Use the generated Color Palette
 6. **Copy the Color Palet**: Use the generated color palette in your onw project!
 
 
--------------------
-
-
-
-![dash-pylette](https://github.com/AnnMarieW/dash-pylette/assets/72614349/313443f8-ae43-4371-a4d4-ba9051deb61c)
-
-
-
---------------------
-
-
-
-
-### Run the app locally
+### To run the app locally
 
 To get started with Dash Pylette, clone this repository and run the app:
 

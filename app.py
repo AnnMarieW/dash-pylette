@@ -117,7 +117,7 @@ dash_pylette = html.Div([
         "Make ",
         create_link(icon=None, href="https://github.com/AnnMarieW/dash-pylette",text=" a Dash app like this"),
         " in ~250 lines of Python code. "
-    ], ),
+    ], size="sm" ),
 
 ])
 
