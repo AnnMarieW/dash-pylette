@@ -103,7 +103,8 @@ def create_link(icon, href, text=""):
 header = dmc.Group(
     [
         dmc.Burger(id="burger-button", opened=False, hiddenFrom="md"),
-        dmc.Text(["Pylette: Extract a color palette from an image"], size="xl"),
+        dmc.Text(["Pylette"], size="xl", fw=700),
+        dmc.Text(" Extract a color palette from an image", visibleFrom="xs", size="xl"),
         create_link(icons["github"], "https://github.com/AnnMarieW/dash-pylette"),
     ],
     justify="flex-start",
@@ -141,6 +142,7 @@ dash_pylette = html.Div(
 
 navbar = html.Div(
     [
+        dmc.Text(" Extract a color palette from an image", hiddenFrom="xs", size="xl"),
         select_image,
         dmc.Text("Or upload a file", size="sm"),
         upload,
@@ -157,12 +159,12 @@ navbar = html.Div(
 page_content = dcc.Loading(
     [
         dmc.Center(
-            html.Div(
+            dmc.Paper(
                 html.Img(
-                    id="image", style={"height": 650, "width": "auto", "padding": 50}
+                    id="image", style={"height": "100%", "width": "100%", "objectFit": "contain", "padding": 50}
                 ),
                 id="image-card",
-                style={"height": 650},
+                h={"base":400, "md":600}
             )
         ),
         dmc.Group(id="palette", gap=0, justify="center", mt=10),
