@@ -156,35 +156,42 @@ navbar = dmc.ScrollArea(
     offsetScrollbars=True,
     type="scroll",
     style={"height": "100%"},
+)
 
+image = html.Img(
+    id="image",
+    style={
+        "height": "100%",
+        "width": "100%",
+        "objectFit": "contain",
+        "padding": 50,
+    },
 )
 
 page_content = dcc.Loading(
     [
-        dmc.Center(
-            dmc.Paper(
-                html.Img(
-                    id="image", style={"height": "100%", "width": "100%", "objectFit": "contain", "padding": 50}
-                ),
-                id="image-card",
-                h={"base":400, "md":600}
-            )
-        ),
+        dmc.Center(dmc.Paper(image, id="image-card", h={"base": 400, "md": 600})),
         dmc.Group(id="palette", gap=0, justify="center", mt=10),
         html.Center(
             html.Div(
                 [
                     color_picker,
                     dmc.Text(id="selected-color", mb=24),
-                    dmc.ScrollArea(html.Div(id="copy"),  offsetScrollbars=True,
-    type="scroll",
-    style={"widthe": "100%"},),
+                    dmc.ScrollArea(
+                        html.Div(id="copy"),
+                        offsetScrollbars=True,
+                        type="scroll",
+                        style={"width": "100%"},
+                    ),
                 ]
             )
         ),
     ],
-    overlay_style={"visibility": "visible", "opacity": 0.5, "backgroundColor": "white"},
+    overlay_style={"visibility": "visible", "opacity": 0.4, "backgroundColor": "white"},
     delay_show=500,
+    custom_spinner=dmc.Group(
+        [dmc.Text("Creating Palette", fw=700, size="xl"), dmc.Loader(type="dots")]
+    ),
 )
 
 # using pages just for an easy way to generate the meta-tags :-)
