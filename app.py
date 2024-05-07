@@ -152,6 +152,12 @@ navbar = dcc.Loading(
     ),
     delay_show=500,
     custom_spinner=dmc.Loader(type="dots"),
+    overlay_style={
+            "visibility": "visible",
+            "opacity": 0.5,
+            "backgroundColor": "white",
+            "zIndex": 5000,  # disables input components while loading
+    },
 )
 
 image = html.Img(
