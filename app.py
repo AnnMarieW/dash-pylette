@@ -99,11 +99,18 @@ def create_link(icon, href, text=""):
     )
 
 
+burger_button = dcc.Loading(
+    dmc.Burger(id="burger-button", opened=False, hiddenFrom="md"),
+    overlay_style={"zIndex": 5000},
+    delay_show=500,
+    custom_spinner=dmc.Group(dmc.Loader(type="dots", size="sm")),
+)
+
 header = dmc.Group(
     [
-        dmc.Burger(id="burger-button", opened=False, hiddenFrom="md"),
+        burger_button,
         dmc.Text(["Dash Pylette"], size="xl", fw=700),
-        dmc.Text(" Get a color palette from an image", visibleFrom="xs", size="xl"),
+        dmc.Text(" Get a color palette from an image", visibleFrom="sm", size="xl"),
         create_link(icons["github"], "https://github.com/AnnMarieW/dash-pylette"),
     ],
     justify="flex-start",
@@ -122,40 +129,29 @@ def make_divider(text, icon):
     )
 
 
-dash_pylette = html.Div(
-    [
-        dmc.Text(
-            [
-                "Make ",
-                create_link(
-                    icon=None,
-                    href="https://github.com/AnnMarieW/dash-pylette",
-                    text=" a Dash app like this",
-                ),
-                " in ~250 lines of Python code. ",
-            ],
-            size="sm",
-        ),
-    ]
-)
 
-navbar = dmc.ScrollArea(
-    [
-        dmc.Text("Get a color palette from an image", hiddenFrom="xs", fw=700),
-        select_image,
-        dmc.Text("Or upload a file", size="sm"),
-        upload,
-        make_divider("Configure Pylette", icons["tools"]),
-        sort_by,
-        mode,
-        resize,
-        dmc.Text("Palette color count", size="sm"),
-        pallette_color_count,
-        html.Div(dash_pylette, style={"marginTop": 300}),
-    ],
-    offsetScrollbars=True,
-    type="scroll",
-    style={"height": "100%"},
+navbar = dcc.Loading(
+    dmc.ScrollArea(
+        [
+            dmc.Text("Get a color palette from an image", hiddenFrom="sm", fw=700),
+            select_image,
+            dmc.Text("Or upload a file", size="sm"),
+            upload,
+            make_divider("Configure Pylette", icons["tools"]),
+            sort_by,
+            mode,
+            resize,
+            dmc.Text("Palette color count", size="sm"),
+            pallette_color_count,
+            # Used to trigger a dcc.Loading component when page content is being updated
+            dcc.Store(id="loading-trigger", data={}),
+        ],
+        offsetScrollbars=True,
+        type="scroll",
+        style={"height": "100%"},
+    ),
+    delay_show=500,
+    custom_spinner=dmc.Loader(type="dots"),
 )
 
 image = html.Img(
@@ -187,7 +183,13 @@ page_content = dcc.Loading(
             )
         ),
     ],
-    overlay_style={"visibility": "visible", "opacity": 0.4, "backgroundColor": "white"},
+    id="page-content",
+    overlay_style={
+        "visibility": "visible",
+        "opacity": 0.5,
+        "backgroundColor": "white",
+        "zIndex": 5000,  # disables input components while loading
+    },
     delay_show=500,
     custom_spinner=dmc.Group(
         [dmc.Text("Creating Palette", fw=700, size="xl"), dmc.Loader(type="dots")]
@@ -264,6 +266,10 @@ def update_image(image_path, upload):
     Output("color-picker", "swatches"),
     Output("color-picker", "value"),
     Output("copy", "children"),
+    # triggers the loading component in the sidebar
+    Output("loading-trigger", "data"),
+    # triggers the loading component over the burger button in mobile
+    Output("burger-button", "style"),
     Input("select-image-store", "data"),
     Input("color-count", "value"),
     Input("radio-group-sort-by", "value"),
@@ -273,7 +279,6 @@ def update_image(image_path, upload):
 def process_image_and_update_layout(
     image_path, color_count, sort_value, mode_value, resize_value
 ):
-
     palette = extract_colors(
         image=image_path,
         palette_size=color_count,
@@ -292,8 +297,7 @@ def process_image_and_update_layout(
         p="sm",
         style={"textAlign": "left"},
     )
-
-    return swatches, dominant_color, copy_swatches
+    return swatches, dominant_color, copy_swatches, "show loading in navbar", {}
 
 
 @callback(
@@ -315,6 +319,21 @@ def update_frame_color(color):
 def navbar_is_open(opened, navbar):
     navbar["collapsed"] = {"mobile": not opened}
     return navbar
+
+
+# on mobile close the navbar on update
+@callback(
+    Output("burger-button", "opened"),
+    Input("select-image-store", "data"),
+    Input("color-count", "value"),
+    Input("radio-group-sort-by", "value"),
+    Input("radio-group-mode", "value"),
+    Input("checkbox-resize", "checked"),
+    Input("select-image-store", "data"),
+    prevent_initial_call=True,
+)
+def navbar_is_open(*_):
+    return False
 
 
 if __name__ == "__main__":
