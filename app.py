@@ -114,6 +114,7 @@ header = dmc.Group(
         create_link(icons["github"], "https://github.com/AnnMarieW/dash-pylette"),
     ],
     justify="flex-start",
+    style={'height': '1 !important'}
 )
 
 
@@ -208,8 +209,8 @@ app = Dash(use_pages=True, pages_folder="")
 
 app_shell = dmc.AppShell(
     [
-        dmc.AppShellHeader(header, px=25),
-        dmc.AppShellNavbar(navbar, p=24),
+        dmc.AppShellHeader([dmc.Space(h=5), header], px=25, style={'height': '50px'}),
+        dmc.AppShellNavbar(navbar, p=24, style={'top': '50px'}),
         dmc.AppShellMain(page_content),
         dcc.Store(id="select-image-store", data={}),
     ],
