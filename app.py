@@ -109,11 +109,13 @@ burger_button = dcc.Loading(
 header = dmc.Group(
     [
         burger_button,
+        dmc.Image(src="/assets/dash-pylette-logo.jpg", h=36, w="100%"),
         dmc.Text(["Dash Pylette"], size="xl", fw=700),
         dmc.Text(" Get a color palette from an image", visibleFrom="sm", size="xl"),
-        create_link(icons["github"], "https://github.com/AnnMarieW/dash-pylette"),
+        dmc.Text(create_link(icons["github"], "https://github.com/AnnMarieW/dash-pylette"), ml="auto")
     ],
     justify="flex-start",
+    gap="sm",
     style={'height': '1 !important'}
 )
 
@@ -153,12 +155,6 @@ navbar = dcc.Loading(
     ),
     delay_show=500,
     custom_spinner=dmc.Loader(type="dots"),
-    overlay_style={
-            "visibility": "visible",
-            "opacity": 0.5,
-            "backgroundColor": "white",
-            "zIndex": 5000,  # disables input components while loading
-    },
 )
 
 image = html.Img(
@@ -199,7 +195,7 @@ page_content = dcc.Loading(
     },
     delay_show=500,
     custom_spinner=dmc.Group(
-        [dmc.Text("Creating Palette", fw=700, size="xl"), dmc.Loader(type="dots")]
+        [dmc.Text("Creating Palette", fw=700, size="xl"), dmc.Loader(type="dots")],  bg="rgb(174, 178, 185)", p=12
     ),
 )
 
