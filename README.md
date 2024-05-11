@@ -1,5 +1,13 @@
 
-# Dash Pylette
+
+<span align="center">
+    <h1> Dash Pylette - create color palettes from images </h1>  
+    <h2> Create color palettes from images </h2>  
+</span>
+
+<p align="center">   
+    <img src="https://raw.githubusercontent.com/AnnMarieW/dash-pylette/main/assets/dash-pylette-logo.jpg" alt="logo" width=250 >
+</p>
 
 ### Introduction
 
