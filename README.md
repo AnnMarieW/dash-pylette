@@ -1,7 +1,7 @@
 
 
 <span align="center">
-    <h1> Dash Pylette - create color palettes from images </h1>  
+    <h1> Dash Pylette </h1>  
     <h2> Create color palettes from images </h2>  
 </span>
 
