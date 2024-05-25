@@ -63,7 +63,7 @@ mode = dmc.RadioGroup(
 
 
 resize = dmc.Checkbox(
-    id="checkbox-resize", label="Resize image for faster results", checked=False, mb=30
+    id="checkbox-resize", label="Resize image for faster results", checked=True, mb=30
 )
 
 
@@ -189,9 +189,7 @@ page_content = dcc.Loading(
     id="page-content",
     overlay_style={
         "visibility": "visible",
-        "opacity": 0.5,
-        "backgroundColor": "white",
-        "zIndex": 5000,  # disables input components while loading
+        "opacity": 0.3,
     },
     delay_show=500,
     custom_spinner=dmc.Group(
@@ -199,7 +197,7 @@ page_content = dcc.Loading(
     ),
 )
 
-# using pages just for an easy way to generate the meta-tags :-)
+# using pages just for an easy way to generate the meta-tags
 app = Dash(use_pages=True, pages_folder="")
 
 
